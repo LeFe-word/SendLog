@@ -17,7 +17,7 @@ read TOKEN
 echo "Chat_id:"
 read CHAT_ID
 
-echo "python3 send_logs.py --TOKEN $TOKEN --CHAT_ID $CHAT_ID"
+echo "python3 send_logs.py --TOKEN $TOKEN --CHAT_ID $CHAT_ID" >> send_log.sh
 chmod +x send_log.sh
 
 echo -e "0 7 * * * ./send_log.sh \n" > shedule.txt
