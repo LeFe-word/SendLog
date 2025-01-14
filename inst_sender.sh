@@ -20,5 +20,9 @@ read CHAT_ID
 echo "python3 send_logs.py --TOKEN $TOKEN --CHAT_ID $CHAT_ID"
 chmod +x send_log.sh
 
-
+echo -e "0 7 * * * ./send_log.sh \n" > shedule.txt
+echo -e "0 13 * * * ./send_log.sh \n" >> shedule.txt
+echo -e "0 19 * * * ./send_log.sh \n" >> shedule.txt
+echo -e "0 23 * * * ./send_log.sh \n" >> shedule.txt
+crontab -u shedule.txt
 
