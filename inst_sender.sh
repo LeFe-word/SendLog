@@ -24,5 +24,6 @@ echo -e "0 7 * * * ./send_log.sh \n" > shedule.txt
 echo -e "0 13 * * * ./send_log.sh \n" >> shedule.txt
 echo -e "0 19 * * * ./send_log.sh \n" >> shedule.txt
 echo -e "0 23 * * * ./send_log.sh \n" >> shedule.txt
-crontab -u shedule.txt
+crontab shedule.txt
+#./send_log.sh
 
