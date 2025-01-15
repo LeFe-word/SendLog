@@ -7,7 +7,7 @@ import configparser
 #CHAT_ID =          # Ваш chat_id
 LOG_FILE = "current_logs.txt"  # Файл с логами
 
-def send_message(message):
+def send_message(message, token, chat_id):
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     payload = {
         "chat_id": chat_id,
@@ -18,7 +18,7 @@ def send_message(message):
     if response.status_code != 200:
         print(f"Ошибка отправки сообщения: {response.text}")
 
-def send_logs():
+def send_logs(token, chat_id):
     if not os.path.exists(LOG_FILE):
         print("Файл с логами не найден.")
         return
@@ -29,7 +29,7 @@ def send_logs():
     # Ограничение Telegram на длину сообщения — 4096 символов
     max_length = 4096
     for i in range(0, len(logs), max_length):
-        send_message(logs[i:i + max_length])
+        send_message(logs[i:i + max_length], token, chat_id)
 
 def main():
     # Создаем объект ConfigParser
@@ -48,7 +48,7 @@ def main():
         return
 
     # Отправка логов
-    send_logs()
+    send_logs(token, chat_id)
 
 if __name__ == "__main__":
     main()
