@@ -48,7 +48,7 @@ def main():
         return
 
     # Отправка логов
-    send_log()
+    send_logs()
 
 if __name__ == "__main__":
     main()
