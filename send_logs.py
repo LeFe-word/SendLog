@@ -1,6 +1,6 @@
 import requests
 import os
-import argparse
+import configparser
 
 # Конфигурация
 #TOKEN =            # Токен бота
@@ -8,9 +8,9 @@ import argparse
 LOG_FILE = "current_logs.txt"  # Файл с логами
 
 def send_message(message):
-    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
     payload = {
-        "chat_id": CHAT_ID,
+        "chat_id": chat_id,
         "text": message,
         "parse_mode": "HTML"  # Для поддержки HTML-форматирования
     }
@@ -31,5 +31,25 @@ def send_logs():
     for i in range(0, len(logs), max_length):
         send_message(logs[i:i + max_length])
 
+def main():
+    # Создаем объект ConfigParser
+    config = configparser.ConfigParser()
+
+    # Читаем файл конфигурации
+    config.read("send.ini")
+
+    try:
+        # Извлекаем данные из секции [Telegram]
+        token = config["Telegram"]["token"]
+        chat_id = config["Telegram"]["chat_id"]
+        #log_file = config["Telegram"]["log_file"]
+    except KeyError as e:
+        print(f"Error: Missing configuration parameter: {e}")
+        return
+
+    # Отправка логов
+    send_log()
+
 if __name__ == "__main__":
-    send_logs()
+    main()
+
