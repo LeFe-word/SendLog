@@ -28,4 +28,4 @@ docker logs --tail 7 titan  >> current_logs.txt 2>&1
 echo -e "\n" >> current_logs.txt 
 
 # Запуск Python-скрипта
-
+python3 send_logs.py
