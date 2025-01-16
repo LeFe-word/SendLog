@@ -1,11 +1,52 @@
 import requests
 import os
 import configparser
+import re
+from pathlib import Path
 
 # Конфигурация
 #TOKEN =            # Токен бота
 #CHAT_ID =          # Ваш chat_id
 LOG_FILE = "current_logs.txt"  # Файл с логами
+
+def clean_logs(log_file_path):
+    """
+    Удаляет избыточную информацию, такую как ANSI-коды и пустые строки.
+    """
+    ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')  # ANSI коды
+    cleaned_lines = []
+    
+    try:
+        with open(log_file_path, 'r') as file:
+            for line in file:
+                # Удаляем ANSI-коды
+                line = ansi_escape.sub('', line)
+                # Пропускаем пустые строки
+                if line.strip():
+                    cleaned_lines.append(line.strip())
+    except FileNotFoundError:
+        print(f"Error: File {log_file_path} not found.")
+        return None
+    
+    return '\n'.join(cleaned_lines)
+
+def save_cleaned_log(cleaned_data, output_path):
+    """
+    Сохраняет очищенные логи в новый файл.
+    """
+    if cleaned_data:
+        with open(output_path, 'w') as file:
+            file.write(cleaned_data)
+        print(f"Cleaned log saved to {output_path}")
+    else:
+        print("No data to save.")
+
+# Использование
+log_file = 'logs.txt'  # Имя файла с логами
+cleaned_log_file = 'cleaned_logs.txt'  # Имя для сохраненного файла
+
+cleaned_data = clean_logs(log_file)
+save_cleaned_log(cleaned_data, cleaned_log_file)
 
 def send_message(message, token, chat_id):
     url = f"https://api.telegram.org/bot{token}/sendMessage"
