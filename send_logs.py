@@ -8,6 +8,7 @@ from pathlib import Path
 #TOKEN =            # Токен бота
 #CHAT_ID =          # Ваш chat_id
 LOG_FILE = "current_logs.txt"  # Файл с логами
+TMP_FILE = "tmp_log.txt"
 
 def clean_logs(log_file_path):
     """
@@ -41,13 +42,6 @@ def save_cleaned_log(cleaned_data, output_path):
     else:
         print("No data to save.")
 
-# Использование
-log_file = 'logs.txt'  # Имя файла с логами
-cleaned_log_file = 'cleaned_logs.txt'  # Имя для сохраненного файла
-
-cleaned_data = clean_logs(log_file)
-save_cleaned_log(cleaned_data, cleaned_log_file)
-
 def send_message(message, token, chat_id):
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     payload = {
@@ -60,11 +54,11 @@ def send_message(message, token, chat_id):
         print(f"Ошибка отправки сообщения: {response.text}")
 
 def send_logs(token, chat_id):
-    if not os.path.exists(LOG_FILE):
+    if not os.path.exists(TMP_FILE):
         print("Файл с логами не найден.")
         return
     
-    with open(LOG_FILE, "r") as file:
+    with open(TMP_FILE, "r") as file:
         logs = file.read()
 
     # Ограничение Telegram на длину сообщения — 4096 символов
@@ -87,6 +81,9 @@ def main():
     except KeyError as e:
         print(f"Error: Missing configuration parameter: {e}")
         return
+
+    cleaned_data = clean_logs(LOG_FILE)
+    save_cleaned_log(cleaned_data, TMP_FILE)
 
     # Отправка логов
     send_logs(token, chat_id)
