@@ -23,8 +23,8 @@ def clean_logs(log_file_path):
                 # Удаляем ANSI-коды
                 line = ansi_escape.sub('', line)
                 # Пропускаем пустые строки
-                if line.strip():
-                    cleaned_lines.append(line.strip())
+     #           if line.strip():
+      #              cleaned_lines.append(line.strip())
     except FileNotFoundError:
         print(f"Error: File {log_file_path} not found.")
         return None
