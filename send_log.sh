@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "$(curl -s ifconfig.me)" > current_logs.txt
+echo "$(curl -s ifconfig.me) $(date)" > current_logs.txt
 echo -e "\n" >> current_logs.txt
 
 echo "Hyperlane" >> current_logs.txt
