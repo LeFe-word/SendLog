@@ -25,9 +25,8 @@ echo "chat_id = $CHAT_ID" >> send.ini
 chmod +x send_log.sh
 
 echo -e "0 7 * * * ./send_log.sh" > shedule.txt
-echo -e "0 13 * * * ./send_log.sh" >> shedule.txt
 echo -e "0 19 * * * ./send_log.sh" >> shedule.txt
-echo -e "0 23 * * * ./send_log.sh" >> shedule.txt
+
 crontab shedule.txt
 #./send_log.sh
 
