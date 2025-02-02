@@ -27,5 +27,13 @@ echo "Titan" >> current_logs.txt
 docker logs --tail 7 titan  >> current_logs.txt 2>&1
 echo -e "\n" >> current_logs.txt 
 
+echo "Cysic" >> current_logs.txt
+sudo journalctl -u cysic-verifier -n 2  >> current_logs.txt
+echo -e "\n" >> current_logs.txt
+
+echo "Initverse" >> current_logs.txt
+sudo journalctl -u initverse-miner -n 2 >> current_logs.txt 
+echo -e "\n" >> current_logs.txt 
+
 # Запуск Python-скрипта
 python3 send_logs.py
